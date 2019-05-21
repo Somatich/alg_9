@@ -10,22 +10,58 @@ def BFS(graph, s):
         a['color'] = 'white'
         a['d'] = float('inf')
         a['pi'] = None
-
+    print(graph.adj)
     q = deque()
 
     graph.attributes[s]['d'] = 0
     graph.attributes[s]['pi'] = None
-    graph.attributes[s]['color'] = 'gray'
+    graph.attributes[s]['color'] = 'gray'   #f added first vertice
     q.append(s)
-
     step = 0
     while len(q) > 0:
         step += 1
         print(step, [graph.attributes[v]['name'] for v in q])
         print(step, [graph.attributes[v]['d'] for v in q])
-        graph.draw('{}'.format(step))
+#        print(graph.adj[v])
+        print(q)
+        x = q.popleft()
+        print(x)                                                                # take first in vertice
+        for m in graph.adj[x]:                                                  # for every vertice connected with x
+            if graph.attributes[m]['color'] == 'white':                         # if it newer been taken
+                q.append(m)                                                     # add it to deque
+                graph.attributes[m]['d'] = graph.attributes[x]['d'] + 1         # pathlenght counter
+                graph.attributes[m]['pi'] = x                                   # ancestor vertice
+                graph.attributes[m]['color'] = 'gray'                           # were added in deque
+            else:
+                print('eggs!')                                                  # if it was processed print stupid word
 
-        raise NotImplementedError('Реализуйте алгоритм здесь')
+#        graph.attributes[x]['d']
+        graph.attributes[x]['color'] = 'black'                                  # mark that x were processed
+        print(q)
+    print(graph.attributes)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#        graph.draw('{}'.format(step))
+
+#        raise NotImplementedError('Реализуйте алгоритм здесь')
 
 
 def main():
